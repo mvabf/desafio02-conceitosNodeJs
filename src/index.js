@@ -40,6 +40,23 @@ app.put('/repositories/:id', (request, response) => {
     return response.json(repository);
 });
 
+/**
+ * PUT para os likes
+ */
+app.put('/repositories/:id/likes', (request, response) => {
+    const { id } = request.params;
+
+    const repositoryIndex = repositories.findIndex(repository => repository.id === id);
+
+    if (repositoryIndex < 0) {
+        return response.status(400).json({ error: 'Repository not found.' });
+    }
+
+    repositories[repositoryIndex].likes += 1;
+
+    return response.json(repositories[repositoryIndex]);
+});
+
 app.delete('/repositories/:id', (request, response) => {
     const { id } = request.params;
 
